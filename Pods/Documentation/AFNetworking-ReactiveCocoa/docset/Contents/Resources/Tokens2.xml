@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Categories/AFHTTPRequestOperation+RACSupport.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cat/AFHTTPRequestOperation(RACSupport)</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AFHTTPRequestOperation+RACSupport.h</DeclaredIn>
+			
+			<NodeRef refid="2"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/AFHTTPRequestOperation(RACSupport)/rac_setCompletionBlockWithSubject:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AFHTTPRequestOperation+RACSupport.h</DeclaredIn>			
+			
+			<Declaration>- (void)rac_setCompletionBlockWithSubject:(RACSubject *)subject</Declaration>
+			
+			
+			<Anchor>//api/name/rac_setCompletionBlockWithSubject:</Anchor>
+            <NodeRef refid="2"/>
+		</Token>
+		
+	</File>
+</Tokens>

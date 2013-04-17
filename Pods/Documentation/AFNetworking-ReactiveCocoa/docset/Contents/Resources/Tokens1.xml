@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Tokens version="1.0">
+	<File path="Categories/AFHTTPClient+RACSupport.html">
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/cat/AFHTTPClient(RACSupport)</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AFHTTPClient+RACSupport.h</DeclaredIn>
+			
+			<NodeRef refid="1"/>
+		</Token>
+		
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/AFHTTPClient(RACSupport)/rac_enqueueHTTPRequestOperation:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AFHTTPClient+RACSupport.h</DeclaredIn>			
+			
+			<Declaration>- (RACSignal *)rac_enqueueHTTPRequestOperation:(AFHTTPRequestOperation *)requestOperation</Declaration>
+			
+			
+			<Anchor>//api/name/rac_enqueueHTTPRequestOperation:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/AFHTTPClient(RACSupport)/rac_enqueueHTTPRequestOperationWithRequest:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AFHTTPClient+RACSupport.h</DeclaredIn>			
+			
+			<Declaration>- (RACSignal *)rac_enqueueHTTPRequestOperationWithRequest:(NSURLRequest *)urlRequest</Declaration>
+			
+			
+			<Anchor>//api/name/rac_enqueueHTTPRequestOperationWithRequest:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/AFHTTPClient(RACSupport)/rac_enqueueBatchOfHTTPRequestOperations:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AFHTTPClient+RACSupport.h</DeclaredIn>			
+			
+			<Declaration>- (RACSignal *)rac_enqueueBatchOfHTTPRequestOperations:(NSArray *)requestOperations</Declaration>
+			
+			
+			<Anchor>//api/name/rac_enqueueBatchOfHTTPRequestOperations:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/AFHTTPClient(RACSupport)/rac_enqueueBatchOfHTTPRequestOperationsWithRequests:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AFHTTPClient+RACSupport.h</DeclaredIn>			
+			
+			<Declaration>- (RACSignal *)rac_enqueueBatchOfHTTPRequestOperationsWithRequests:(NSArray *)urlRequests</Declaration>
+			
+			
+			<Anchor>//api/name/rac_enqueueBatchOfHTTPRequestOperationsWithRequests:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/AFHTTPClient(RACSupport)/rac_getPath:parameters:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AFHTTPClient+RACSupport.h</DeclaredIn>			
+			
+			<Declaration>- (RACSignal *)rac_getPath:(NSString *)path parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/rac_getPath:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/AFHTTPClient(RACSupport)/rac_postPath:parameters:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AFHTTPClient+RACSupport.h</DeclaredIn>			
+			
+			<Declaration>- (RACSignal *)rac_postPath:(NSString *)path parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/rac_postPath:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/AFHTTPClient(RACSupport)/rac_putPath:parameters:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AFHTTPClient+RACSupport.h</DeclaredIn>			
+			
+			<Declaration>- (RACSignal *)rac_putPath:(NSString *)path parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/rac_putPath:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/AFHTTPClient(RACSupport)/rac_deletePath:parameters:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AFHTTPClient+RACSupport.h</DeclaredIn>			
+			
+			<Declaration>- (RACSignal *)rac_deletePath:(NSString *)path parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/rac_deletePath:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+		<Token>
+			<TokenIdentifier>//apple_ref/occ/intfm/AFHTTPClient(RACSupport)/rac_patchPath:parameters:</TokenIdentifier>
+			<Abstract type="html"></Abstract>
+			<DeclaredIn>AFHTTPClient+RACSupport.h</DeclaredIn>			
+			
+			<Declaration>- (RACSignal *)rac_patchPath:(NSString *)path parameters:(NSDictionary *)parameters</Declaration>
+			
+			
+			<Anchor>//api/name/rac_patchPath:parameters:</Anchor>
+            <NodeRef refid="1"/>
+		</Token>
+		
+	</File>
+</Tokens>

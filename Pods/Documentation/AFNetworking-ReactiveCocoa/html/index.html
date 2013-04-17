@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>AFNetworking-ReactiveCocoa 0.0.2 Reference</title>
+		<link rel="stylesheet" type="text/css" href="css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.1 (build 858)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="index.html">AFNetworking-ReactiveCocoa 0.0.2 </a></h1>
+				<a id="developerHome" href="index.html">Tomoki Aonuma</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">AFNetworking-ReactiveCocoa 0.0.2 Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar"></ul>
+		</header>
+		<article>
+			<div id="overview_contents" role="main">
+				<div class="main-navigation navigation-top">
+					<a href="hierarchy.html">Next</a>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">AFNetworking-ReactiveCocoa 0.0.2 Reference</h1>
+					</div>		
+				</div>
+				<div id="container">
+					
+					<div class="section section-overview index-overview">
+						
+						
+						<h1>AFNetworking-ReactiveCocoa</h1>
+
+<p>AFNetworking-ReactiveCocoa makes AFNetworking reactive.</p>
+
+<h2>Install</h2>
+
+<p>Add <code>pod 'AFNetworking-ReactiveCocoa'</code> in your Podfile.</p>
+
+<h2>Synopsis</h2>
+
+<p>```objc</p>
+
+<h1>import &lt;AFNetworking/AFNetworking.h></h1>
+
+<h1>import &lt;ReactiveCocoa/ReactiveCocoa.h></h1>
+
+<h1>import &lt;AFNetworking-ReactiveCocoa/AFNetworking-ReactiveCocoa.h></h1>
+
+<ul>
+<li><p>(void)requestAndSubscribe {
+AFHTTPClient <em>client = &hellip;;
+NSURLRequest </em>request = &hellip;;</p>
+
+<p>// Enqueue the request and get a signal.
+RACSignal *signal = [client rac_enqueueHTTPRequestOperationWithRequest:request];</p>
+
+<p>// Subscribe the signal, which will send a tuple of the request operation
+// and the response object.
+[signal
+ subscribeNext:^(RACTuple <em>tuple) {
+   RACTupleUnpack(AFHTTPRequestOperation </em>operation, id responseObject) = tuple;
+   NSLog(@&ldquo;success: operation=%@, responseObject=%@&rdquo;, operation, responseObject);
+}
+ error:^(NSError <em>error) {
+   // The error object is the same one that is passed to the failure handler
+   // of the enqueued request operation, except one additional key-value pair
+   // in <code>userInfo</code> as shown below.
+   AFHTTPRequestOperation </em>operation = [error.userInfo objectForKey:@&ldquo;AFHTTPRequestOperation&rdquo;];
+   NSLog(@&ldquo;error: operation=%@&rdquo;, operation);
+ }
+ completed:^{
+   NSLog(@&ldquo;completed&rdquo;);
+ }];
+}
+```</p></li>
+</ul>
+
+
+<h2>Description</h2>
+
+<p>AFNetworking-ReactiveCocoa adds these methods:</p>
+
+<p>```objc
+@interface AFHTTPClient (RACSupport)</p>
+
+<ul>
+<li>(RACSignal <em>)rac_enqueueHTTPRequestOperation:(AFHTTPRequestOperation </em>)requestOperation;</li>
+<li><p>(RACSignal <em>)rac_enqueueHTTPRequestOperationWithRequest:(NSURLRequest </em>)urlRequest;</p></li>
+<li><p>(RACSignal <em>)rac_enqueueBatchOfHTTPRequestOperations:(NSArray </em>)requestOperations;</p></li>
+<li><p>(RACSignal <em>)rac_enqueueBatchOfHTTPRequestOperationsWithRequests:(NSArray </em>)urlRequests;</p></li>
+<li><p>(RACSignal <em>)rac_getPath:(NSString </em>)path parameters:(NSDictionary *)parameters;</p></li>
+<li>(RACSignal <em>)rac_postPath:(NSString </em>)path parameters:(NSDictionary *)parameters;</li>
+<li>(RACSignal <em>)rac_putPath:(NSString </em>)path parameters:(NSDictionary *)parameters;</li>
+<li>(RACSignal <em>)rac_deletePath:(NSString </em>)path parameters:(NSDictionary *)parameters;</li>
+<li>(RACSignal <em>)rac_patchPath:(NSString </em>)path parameters:(NSDictionary *)parameters;</li>
+</ul>
+
+
+<p>@end</p>
+
+<p>@interface AFHTTPRequestOperation (RACSupport)</p>
+
+<ul>
+<li>(void)rac_setCompletionBlockWithSubject:(RACSubject *)subject;</li>
+</ul>
+
+
+<p>@end
+```</p>
+
+<p>See header files for the detailed documentation.</p>
+						
+						
+					</div>
+					
+                        
+                    
+					
+					
+					
+						
+					<div class="index-column">
+						
+						
+						<h2 class="index-title">Category References</h2>
+						<ul>
+							
+							<li><a href="Categories/AFHTTPClient+RACSupport.html">AFHTTPClient(RACSupport)</a></li>
+							
+							<li><a href="Categories/AFHTTPRequestOperation+RACSupport.html">AFHTTPRequestOperation(RACSupport)</a></li>
+							
+						</ul>
+						
+					</div>
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<a href="hierarchy.html">Next</a>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2013 Tomoki Aonuma. All rights reserved. (Last updated: 2013-04-17)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
+						
+	
+					</div>
+				</div>
+			</div>
+		</article>		
+	</body>
+</html>

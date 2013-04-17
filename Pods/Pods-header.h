@@ -1,6 +1,8 @@
 // WARNING: This feature of CocoaPods is present for discussion purposes and might be discontinued or changed in future
 #define __COCOA_PODS
 
+#define __POD_AFNetworking
+#define __POD_AFNetworking_ReactiveCocoa
 #define __POD_JRSwizzle
 #define __POD_ReactiveCocoa
 #define __POD_ReactiveCocoa_Core

@@ -10,6 +10,12 @@
 
 @interface MGSAppDelegate : NSObject <NSApplicationDelegate>
 
-@property (assign) IBOutlet NSWindow *window;
+@property (assign) IBOutlet NSWindow*       window;
+@property (assign) IBOutlet NSPopUpButton*  culturePopUpButton;
+@property (assign) IBOutlet NSPopUpButton*  categoryPopUpButton;
+@property (assign) IBOutlet NSPopUpButton*  subcategoryPopUpButton;
+@property (assign) IBOutlet NSTableView*    searchResultsTable;
+
+- (IBAction)search: (id)sender;
 
 @end

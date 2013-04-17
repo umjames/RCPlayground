@@ -1,4 +1,8 @@
 PODS:
+  - AFNetworking (1.2.0)
+  - AFNetworking-ReactiveCocoa (0.0.2):
+    - AFNetworking (~> 1.0)
+    - ReactiveCocoa (~> 1.0)
   - JRSwizzle (1.0)
   - libextobjc/EXTConcreteProtocol (0.2.5):
     - libextobjc/RuntimeExtensions
@@ -19,9 +23,13 @@ PODS:
     - ReactiveCocoa/Core
 
 DEPENDENCIES:
+  - AFNetworking (= 1.2.0)
+  - AFNetworking-ReactiveCocoa (~> 0.0)
   - ReactiveCocoa (= 1.5.0)
 
 SPEC CHECKSUMS:
+  AFNetworking: 3cbae45f61a9f995cdbd56bd571223910d7f4e44
+  AFNetworking-ReactiveCocoa: 340f3ca7f6ac411984f75ea33021d1487ea6e4fc
   JRSwizzle: 6242ff38485d870fc2636899048ee1ab883ae587
   libextobjc: 2cbc74caf8bdc74a86fdf24673f773c83424ea98
   ReactiveCocoa: 67e6f96f1aee091ead8306be7ba8da53d2d3671c

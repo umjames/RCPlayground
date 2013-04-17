@@ -11,6 +11,9 @@
 		65246DFF171DDDD700C04AB3 /* MGSFeedzillaCulture.m in Sources */ = {isa = PBXBuildFile; fileRef = 65246DF9171DDDD700C04AB3 /* MGSFeedzillaCulture.m */; };
 		65246E00171DDDD700C04AB3 /* MGSFeedzillaSearchCriteria.m in Sources */ = {isa = PBXBuildFile; fileRef = 65246DFB171DDDD700C04AB3 /* MGSFeedzillaSearchCriteria.m */; };
 		65246E01171DDDD700C04AB3 /* MGSFeedzillaSubcategory.m in Sources */ = {isa = PBXBuildFile; fileRef = 65246DFD171DDDD700C04AB3 /* MGSFeedzillaSubcategory.m */; };
+		65ED0BAE171EED4F00E74159 /* MGSFeedzillaSearchViewModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 65ED0BAD171EED4F00E74159 /* MGSFeedzillaSearchViewModel.m */; };
+		65ED0BB1171EF6D300E74159 /* MGSFeedzillaSearchResult.m in Sources */ = {isa = PBXBuildFile; fileRef = 65ED0BB0171EF6D300E74159 /* MGSFeedzillaSearchResult.m */; };
+		65ED0BB5171F2FCE00E74159 /* MGSFeedzillaClient.m in Sources */ = {isa = PBXBuildFile; fileRef = 65ED0BB4171F2FCE00E74159 /* MGSFeedzillaClient.m */; };
 		B8AD03FEBE6440CEB8B1E159 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 10443FC7D97144F98A5C104A /* libPods.a */; };
 		FDB4D551171BB22200710C2B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB4D550171BB22200710C2B /* Cocoa.framework */; };
 		FDB4D55B171BB22200710C2B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FDB4D559171BB22200710C2B /* InfoPlist.strings */; };
@@ -44,6 +47,12 @@
 		65246DFB171DDDD700C04AB3 /* MGSFeedzillaSearchCriteria.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFeedzillaSearchCriteria.m; sourceTree = "<group>"; };
 		65246DFC171DDDD700C04AB3 /* MGSFeedzillaSubcategory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFeedzillaSubcategory.h; sourceTree = "<group>"; };
 		65246DFD171DDDD700C04AB3 /* MGSFeedzillaSubcategory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFeedzillaSubcategory.m; sourceTree = "<group>"; };
+		65ED0BAC171EED4F00E74159 /* MGSFeedzillaSearchViewModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFeedzillaSearchViewModel.h; sourceTree = "<group>"; };
+		65ED0BAD171EED4F00E74159 /* MGSFeedzillaSearchViewModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFeedzillaSearchViewModel.m; sourceTree = "<group>"; };
+		65ED0BAF171EF6D300E74159 /* MGSFeedzillaSearchResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFeedzillaSearchResult.h; sourceTree = "<group>"; };
+		65ED0BB0171EF6D300E74159 /* MGSFeedzillaSearchResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFeedzillaSearchResult.m; sourceTree = "<group>"; };
+		65ED0BB3171F2FCE00E74159 /* MGSFeedzillaClient.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MGSFeedzillaClient.h; sourceTree = "<group>"; };
+		65ED0BB4171F2FCE00E74159 /* MGSFeedzillaClient.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MGSFeedzillaClient.m; sourceTree = "<group>"; };
 		AF2107304AD84B4DB3F6DF1E /* Pods.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.xcconfig; path = ../Pods/Pods.xcconfig; sourceTree = SOURCE_ROOT; };
 		FDB4D54D171BB22200710C2B /* RCPlayground.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RCPlayground.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FDB4D550171BB22200710C2B /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -99,6 +108,8 @@
 				65246DFB171DDDD700C04AB3 /* MGSFeedzillaSearchCriteria.m */,
 				65246DFC171DDDD700C04AB3 /* MGSFeedzillaSubcategory.h */,
 				65246DFD171DDDD700C04AB3 /* MGSFeedzillaSubcategory.m */,
+				65ED0BAF171EF6D300E74159 /* MGSFeedzillaSearchResult.h */,
+				65ED0BB0171EF6D300E74159 /* MGSFeedzillaSearchResult.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -106,8 +117,19 @@
 		65246E02171DE6DB00C04AB3 /* View Models */ = {
 			isa = PBXGroup;
 			children = (
+				65ED0BAC171EED4F00E74159 /* MGSFeedzillaSearchViewModel.h */,
+				65ED0BAD171EED4F00E74159 /* MGSFeedzillaSearchViewModel.m */,
 			);
 			path = "View Models";
+			sourceTree = "<group>";
+		};
+		65ED0BB2171F2F9700E74159 /* Networking */ = {
+			isa = PBXGroup;
+			children = (
+				65ED0BB3171F2FCE00E74159 /* MGSFeedzillaClient.h */,
+				65ED0BB4171F2FCE00E74159 /* MGSFeedzillaClient.m */,
+			);
+			path = Networking;
 			sourceTree = "<group>";
 		};
 		FDB4D544171BB22200710C2B = {
@@ -154,6 +176,7 @@
 		FDB4D556171BB22200710C2B /* RCPlayground */ = {
 			isa = PBXGroup;
 			children = (
+				65ED0BB2171F2F9700E74159 /* Networking */,
 				65246E02171DE6DB00C04AB3 /* View Models */,
 				65246DF5171DDDD700C04AB3 /* Models */,
 				FDB4D562171BB22200710C2B /* MGSAppDelegate.h */,
@@ -340,6 +363,9 @@
 				65246DFF171DDDD700C04AB3 /* MGSFeedzillaCulture.m in Sources */,
 				65246E00171DDDD700C04AB3 /* MGSFeedzillaSearchCriteria.m in Sources */,
 				65246E01171DDDD700C04AB3 /* MGSFeedzillaSubcategory.m in Sources */,
+				65ED0BAE171EED4F00E74159 /* MGSFeedzillaSearchViewModel.m in Sources */,
+				65ED0BB1171EF6D300E74159 /* MGSFeedzillaSearchResult.m in Sources */,
+				65ED0BB5171F2FCE00E74159 /* MGSFeedzillaClient.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
