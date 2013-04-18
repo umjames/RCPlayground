@@ -8,6 +8,8 @@
 
 #import "MGSAppDelegate.h"
 #import <ReactiveCocoa/ReactiveCocoa.h>
+#import <EXTScope.h>
+
 #import "MGSFeedzillaSearchViewModel.h"
 #import "MGSFeedzillaCulture.h"
 
@@ -26,6 +28,7 @@
 {
     self.viewModel = [[MGSFeedzillaSearchViewModel alloc] init];
     
+    @weakify(self);
     [[self.viewModel culturesContentSignal] subscribeNext: ^(NSArray* cultures) {
         [self.culturePopUpButton removeAllItems];
         for (MGSFeedzillaCulture* culture in cultures)
@@ -35,6 +38,12 @@
     }
     error: ^(NSError *error) {
         NSLog(@"error occurred obtaining cultures: %@", [error localizedDescription]);
+    }];
+    
+    self.culturePopUpButton.rac_command = [RACCommand command];
+    [self.culturePopUpButton.rac_command subscribeNext: ^(id sender) {
+        @strongify(self);
+        [self.viewModel cultureSelected: sender];
     }];
 }
 

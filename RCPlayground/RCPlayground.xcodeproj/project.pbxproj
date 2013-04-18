@@ -180,6 +180,7 @@
 		FDB4D556171BB22200710C2B /* RCPlayground */ = {
 			isa = PBXGroup;
 			children = (
+				FDBF12C0171FA34C009C44BE /* RAC Extensions */,
 				65ED0BB2171F2F9700E74159 /* Networking */,
 				65246E02171DE6DB00C04AB3 /* View Models */,
 				65246DF5171DDDD700C04AB3 /* Models */,
@@ -220,6 +221,13 @@
 				FDB4D576171BB22200710C2B /* InfoPlist.strings */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FDBF12C0171FA34C009C44BE /* RAC Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = "RAC Extensions";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

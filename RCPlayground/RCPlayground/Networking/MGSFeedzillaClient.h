@@ -9,6 +9,7 @@
 #import <AFNetworking/AFNetworking.h>
 
 @class RACSignal;
+@class MGSFeedzillaCulture;
 
 @interface MGSFeedzillaClient : AFHTTPClient
 
@@ -17,5 +18,6 @@
 - (instancetype)init;
 
 - (RACSignal*)fetchCultures;
+- (RACSignal*)fetchCategoriesWithCulture: (MGSFeedzillaCulture*)culture;
 
 @end

@@ -13,8 +13,11 @@
 @interface MGSFeedzillaSearchViewModel : NSObject
 
 - (IBAction)search: (id)sender;
+- (IBAction)cultureSelected: (id)sender;
 
 - (RACSignal*)culturesContentSignal;
+- (RACSignal*)selectedCultureSignal;
+
 - (RACSignal*)categoriesContentSignal;
 - (RACSignal*)subcategoriesContentSignal;
 
