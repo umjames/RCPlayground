@@ -25,6 +25,7 @@
 		FDB4D570171BB22200710C2B /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDB4D550171BB22200710C2B /* Cocoa.framework */; };
 		FDB4D578171BB22200710C2B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = FDB4D576171BB22200710C2B /* InfoPlist.strings */; };
 		FDB4D57B171BB22300710C2B /* RCPlaygroundTests.m in Sources */ = {isa = PBXBuildFile; fileRef = FDB4D57A171BB22300710C2B /* RCPlaygroundTests.m */; };
+		FDBF12BF171F9F28009C44BE /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FDBF12BE171F9F28009C44BE /* SystemConfiguration.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		FDB4D577171BB22200710C2B /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		FDB4D579171BB22200710C2B /* RCPlaygroundTests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCPlaygroundTests.h; sourceTree = "<group>"; };
 		FDB4D57A171BB22300710C2B /* RCPlaygroundTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCPlaygroundTests.m; sourceTree = "<group>"; };
+		FDBF12BE171F9F28009C44BE /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FDBF12BF171F9F28009C44BE /* SystemConfiguration.framework in Frameworks */,
 				FDB4D551171BB22200710C2B /* Cocoa.framework in Frameworks */,
 				B8AD03FEBE6440CEB8B1E159 /* libPods.a in Frameworks */,
 			);
@@ -166,6 +169,7 @@
 		FDB4D552171BB22200710C2B /* Other Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FDBF12BE171F9F28009C44BE /* SystemConfiguration.framework */,
 				FDB4D553171BB22200710C2B /* AppKit.framework */,
 				FDB4D554171BB22200710C2B /* CoreData.framework */,
 				FDB4D555171BB22200710C2B /* Foundation.framework */,
