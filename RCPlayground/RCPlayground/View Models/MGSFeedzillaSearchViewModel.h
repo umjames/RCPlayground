@@ -14,9 +14,9 @@
 
 - (IBAction)search: (id)sender;
 - (IBAction)cultureSelected: (id)sender;
+- (IBAction)categorySelected: (id)sender;
 
 - (RACSignal*)culturesContentSignal;
-//- (RACSignal*)selectedCultureSignal;
 
 - (RACSignal*)categoriesContentSignal;
 - (RACSignal*)subcategoriesContentSignal;

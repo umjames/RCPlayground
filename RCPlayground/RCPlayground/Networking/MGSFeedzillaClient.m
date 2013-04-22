@@ -8,6 +8,7 @@
 
 #import "MGSFeedzillaClient.h"
 #import "MGSFeedzillaCulture.h"
+#import "MGSFeedzillaCategory.h"
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <AFNetworking-ReactiveCocoa/AFNetworking-ReactiveCocoa.h>
@@ -33,10 +34,10 @@
 
 - (RACSignal*)fetchCultures
 {
-    return [[self rac_getPath: @"v1/cultures.json" parameters: @{}] map: ^id(RACTuple* tuple) {
+    return [[self rac_getPath: @"v1/cultures.json" parameters: nil] map: ^id(RACTuple* tuple) {
         RACTupleUnpack(AFHTTPRequestOperation* requestOp, NSData* response) = tuple;
         
-        NSLog(@"request operation is of class %@", NSStringFromClass([requestOp class]));
+        NSLog(@"culture request operation is of class %@", NSStringFromClass([requestOp class]));
         
         NSArray*    responseArray = [NSJSONSerialization JSONObjectWithData: response options: 0 error: nil];
         
@@ -49,7 +50,21 @@
     return [[self rac_getPath: @"v1/categories.json" parameters: @{@"culture_code": culture.code, @"order": @"popular"}] map: ^id(RACTuple* tuple) {
         RACTupleUnpack(AFHTTPRequestOperation* requestOp, NSData* response) = tuple;
         
-        NSLog(@"request operation is of class %@", NSStringFromClass([requestOp class]));
+        NSLog(@"category request operation is of class %@", NSStringFromClass([requestOp class]));
+        
+        NSArray*    responseArray = [NSJSONSerialization JSONObjectWithData: response options: 0 error: nil];
+        
+        return responseArray;
+    }];
+}
+
+- (RACSignal*)fetchSubcategoriesWithCategory: (MGSFeedzillaCategory*)category
+{
+    return [[self rac_getPath: [NSString stringWithFormat: @"v1/categories/%d/subcategories.json", [category.ID intValue]] parameters: @{@"order": @"popular"}] map: ^id(RACTuple* tuple) {
+        RACTupleUnpack(AFHTTPRequestOperation* requestOp, NSData* response) = tuple;
+        
+        NSLog(@"subcategory request operation is of class %@", NSStringFromClass([requestOp class]));
+//        NSLog(@"subcategory response = %@", [[NSString alloc] initWithData: response encoding: NSUTF8StringEncoding]);
         
         NSArray*    responseArray = [NSJSONSerialization JSONObjectWithData: response options: 0 error: nil];
         

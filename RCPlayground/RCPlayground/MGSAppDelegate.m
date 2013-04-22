@@ -13,6 +13,7 @@
 #import "MGSFeedzillaSearchViewModel.h"
 #import "MGSFeedzillaCulture.h"
 #import "MGSFeedzillaCategory.h"
+#import "MGSFeedzillaSubcategory.h"
 
 @interface MGSAppDelegate ()
 
@@ -33,6 +34,9 @@
     [[self.viewModel culturesContentSignal] subscribeNext: ^(NSArray* cultures) {
         @strongify(self);
         [self.culturePopUpButton removeAllItems];
+        [self.categoryPopUpButton removeAllItems];
+        [self.subcategoryPopUpButton removeAllItems];
+        
         for (MGSFeedzillaCulture* culture in cultures)
         {
             [self.culturePopUpButton addItemWithTitle: culture.displayName];
@@ -48,9 +52,16 @@
         [self.viewModel cultureSelected: sender];
     }];
     
+    self.categoryPopUpButton.rac_command = [RACCommand command];
+    [self.categoryPopUpButton.rac_command subscribeNext: ^(id sender) {
+        @strongify(self);
+        [self.viewModel categorySelected: sender];
+    }];
+    
     [[self.viewModel categoriesContentSignal] subscribeNext: ^(NSArray* categories) {
         @strongify(self);
         [self.categoryPopUpButton removeAllItems];
+        [self.subcategoryPopUpButton removeAllItems];
         for (MGSFeedzillaCategory* category in categories)
         {
             [self.categoryPopUpButton addItemWithTitle: category.displayName];
@@ -58,6 +69,17 @@
     }
     error: ^(NSError* error) {
         NSLog(@"error occurred populating categories: %@", [error localizedDescription]);
+    }];
+    
+    [[self.viewModel subcategoriesContentSignal] subscribeNext: ^(NSArray* subcategories) {
+        @strongify(self);
+        [self.subcategoryPopUpButton removeAllItems];
+        for (MGSFeedzillaSubcategory* subcategory in subcategories)
+        {
+            [self.subcategoryPopUpButton addItemWithTitle: subcategory.displayName];
+        }
+    } error: ^(NSError* error) {
+        NSLog(@"error occurred populating subcategories: %@", [error localizedDescription]);
     }];
 }
 
