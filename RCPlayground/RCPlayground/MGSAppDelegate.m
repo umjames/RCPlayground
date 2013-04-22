@@ -12,6 +12,7 @@
 
 #import "MGSFeedzillaSearchViewModel.h"
 #import "MGSFeedzillaCulture.h"
+#import "MGSFeedzillaCategory.h"
 
 @interface MGSAppDelegate ()
 
@@ -30,13 +31,14 @@
     
     @weakify(self);
     [[self.viewModel culturesContentSignal] subscribeNext: ^(NSArray* cultures) {
+        @strongify(self);
         [self.culturePopUpButton removeAllItems];
         for (MGSFeedzillaCulture* culture in cultures)
         {
             [self.culturePopUpButton addItemWithTitle: culture.displayName];
         }
     }
-    error: ^(NSError *error) {
+    error: ^(NSError* error) {
         NSLog(@"error occurred obtaining cultures: %@", [error localizedDescription]);
     }];
     
@@ -44,6 +46,18 @@
     [self.culturePopUpButton.rac_command subscribeNext: ^(id sender) {
         @strongify(self);
         [self.viewModel cultureSelected: sender];
+    }];
+    
+    [[self.viewModel categoriesContentSignal] subscribeNext: ^(NSArray* categories) {
+        @strongify(self);
+        [self.categoryPopUpButton removeAllItems];
+        for (MGSFeedzillaCategory* category in categories)
+        {
+            [self.categoryPopUpButton addItemWithTitle: category.displayName];
+        }
+    }
+    error: ^(NSError* error) {
+        NSLog(@"error occurred populating categories: %@", [error localizedDescription]);
     }];
 }
 

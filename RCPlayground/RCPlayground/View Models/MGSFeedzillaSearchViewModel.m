@@ -26,9 +26,11 @@
 @property (strong, nonatomic) MGSFeedzillaCulture*  selectedCulture;
 
 @property (strong, nonatomic) NSMutableArray*       cultures;
-@property (strong, nonatomic) NSMutableArray*       categories;
+@property (strong, nonatomic) NSArray*              categories;
 
 - (void)_setupInternalSignals;
+
+- (RACSignal*)_selectedCultureSignal;
 
 @end
 
@@ -63,16 +65,28 @@
 {
     @weakify(self);
     
-    [[self categoriesContentSignal] subscribeNext: ^(NSArray* categoriesFromServer) {
-        @strongify(self);
-        [self.categories removeAllObjects];
-        [self.categories addObjectsFromArray: categoriesFromServer];
-    }];
-    
     [[self culturesContentSignal] subscribeNext: ^(NSArray* culturesFromServer) {
         @strongify(self);
         [self.cultures removeAllObjects];
         [self.cultures addObjectsFromArray: culturesFromServer];
+    }];
+    
+    [[self _selectedCultureSignal] subscribeNext: ^(MGSFeedzillaCulture* culture) {
+        @strongify(self);
+        
+        [[[self.feedzillaClient fetchCategoriesWithCulture: culture] map: ^id(NSArray* categoryJSON) {
+            
+            return [[categoryJSON.rac_sequence map: ^id(NSDictionary* categoryDict) {
+                MGSFeedzillaCategory* category = [[MGSFeedzillaCategory alloc] init];
+                
+                category.displayName = [categoryDict objectForKey: @"english_category_name"];
+                category.ID = [categoryDict objectForKey: @"category_id"];
+                
+                return category;
+            }] array];
+        }] subscribeNext: ^(NSArray* categories) {
+            self.categories = categories;
+        }];
     }];
 }
 
@@ -114,11 +128,11 @@
     return _culturesContentSignal;
 }
 
-- (RACSignal*)selectedCultureSignal
+- (RACSignal*)_selectedCultureSignal
 {
     if (nil == _selectedCultureSignal)
     {
-        _selectedCultureSignal = RACAbleWithStart(self.selectedCulture);
+        _selectedCultureSignal = RACAble(self.selectedCulture);
     }
     
     return _selectedCultureSignal;
@@ -128,17 +142,7 @@
 {
     if (nil == _categoriesContentSignal)
     {
-        _categoriesContentSignal = [[self.feedzillaClient fetchCategoriesWithCulture: self.selectedCulture] map: ^id(NSArray* categoryJSON) {
-            
-            return [[categoryJSON.rac_sequence map: ^id(NSDictionary* categoryDict) {
-                MGSFeedzillaCategory* category = [[MGSFeedzillaCategory alloc] init];
-                
-                category.displayName = [categoryDict objectForKey: @"english_category_name"];
-                category.ID = [categoryDict objectForKey: @"category_id"];
-                
-                return category;
-            }] array];
-        }];
+        _categoriesContentSignal = RACAble(self.categories);
     }
     
     return _categoriesContentSignal;

@@ -16,7 +16,7 @@
 - (IBAction)cultureSelected: (id)sender;
 
 - (RACSignal*)culturesContentSignal;
-- (RACSignal*)selectedCultureSignal;
+//- (RACSignal*)selectedCultureSignal;
 
 - (RACSignal*)categoriesContentSignal;
 - (RACSignal*)subcategoriesContentSignal;

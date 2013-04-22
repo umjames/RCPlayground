@@ -33,7 +33,7 @@
 
 - (RACSignal*)fetchCultures
 {
-    return [[self rac_getPath: @"v1/cultures.json" parameters: nil] map: ^id(RACTuple* tuple) {
+    return [[self rac_getPath: @"v1/cultures.json" parameters: @{}] map: ^id(RACTuple* tuple) {
         RACTupleUnpack(AFHTTPRequestOperation* requestOp, NSData* response) = tuple;
         
         NSLog(@"request operation is of class %@", NSStringFromClass([requestOp class]));
