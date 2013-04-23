@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface MGSAppDelegate : NSObject <NSApplicationDelegate>
+@interface MGSAppDelegate : NSObject <NSApplicationDelegate, NSTableViewDataSource>
 
 @property (assign) IBOutlet NSWindow*       window;
 @property (assign) IBOutlet NSPopUpButton*  culturePopUpButton;

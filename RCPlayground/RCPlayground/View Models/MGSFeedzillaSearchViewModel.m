@@ -11,6 +11,8 @@
 #import "MGSFeedzillaCulture.h"
 #import "MGSFeedzillaCategory.h"
 #import "MGSFeedzillaSubcategory.h"
+#import "MGSFeedzillaSearchCriteria.h"
+#import "MGSFeedzillaSearchResult.h"
 
 #import <ReactiveCocoa/ReactiveCocoa.h>
 #import <EXTScope.h>
@@ -21,6 +23,7 @@
     RACSignal*      _categoriesContentSignal;
     RACSignal*      _subcategoriesContentSignal;
     RACSignal*      _enableSearchSignal;
+    RACSignal*      _searchResultsSignal;
     
     RACSignal*      _selectedCultureSignal;
     RACSignal*      _selectedCategorySignal;
@@ -35,6 +38,7 @@
 @property (strong, nonatomic) NSMutableArray*       cultures;
 @property (strong, nonatomic) NSArray*              categories;
 @property (strong, nonatomic) NSArray*              subcategories;
+@property (strong, nonatomic) NSArray*              searchResults;
 
 - (void)_setupInternalSignals;
 
@@ -56,6 +60,7 @@
         _categoriesContentSignal = nil;
         _subcategoriesContentSignal = nil;
         _enableSearchSignal = nil;
+        _searchResultsSignal = nil;
         
         _selectedCultureSignal = nil;
         _selectedCategorySignal = nil;
@@ -65,6 +70,7 @@
         self.cultures = [[NSMutableArray alloc] initWithCapacity: 5];
         self.categories = [[NSArray alloc] init];
         self.subcategories = [[NSArray alloc] init];
+        self.searchResults = [[NSArray alloc] init];
         
         self.selectedCulture = nil;
         self.selectedCategory = nil;
@@ -173,7 +179,39 @@
 
 - (IBAction)search: (id)sender
 {
+    MGSFeedzillaSearchCriteria* searchCriteria = [[MGSFeedzillaSearchCriteria alloc] init];
     
+    searchCriteria.categoryID = self.selectedCategory.ID;
+    searchCriteria.subcategoryID = self.selectedSubcategory.ID;
+    
+    @weakify(self);
+    [[self.feedzillaClient searchFeedsUsingCriteria: searchCriteria] subscribeNext: ^(NSDictionary* searchResult) {
+        @strongify(self);
+        if (nil == searchCriteria || nil == [searchResult objectForKey: @"articles"])
+        {
+            self.searchResults = [NSArray array];
+        }
+        else
+        {
+            NSMutableArray* results = [NSMutableArray arrayWithCapacity: 5];
+            NSArray*    articles = [searchResult objectForKey: @"articles"];
+            
+            for (NSDictionary* articleJSON in articles)
+            {
+                MGSFeedzillaSearchResult*   tempSearchResult = [[MGSFeedzillaSearchResult alloc] init];
+                
+                tempSearchResult.author = [articleJSON objectForKey: @"author"];
+                tempSearchResult.title = [articleJSON objectForKey: @"title"];
+                tempSearchResult.URL = [NSURL URLWithString: [articleJSON objectForKey: @"url"]];
+                
+                [results addObject: tempSearchResult];
+            }
+            
+            self.searchResults = [NSArray arrayWithArray: results];
+        }
+    } error: ^(NSError* error) {
+        NSLog(@"error searching for feeds: %@", [error localizedDescription]);
+    }];
 }
 
 - (RACSignal*)enableSearchSignal
@@ -235,6 +273,16 @@
     }
     
     return _selectedSubcategorySignal;
+}
+
+- (RACSignal*)searchResultsSignal
+{
+    if (nil == _searchResultsSignal)
+    {
+        _searchResultsSignal = RACAble(self.searchResults);
+    }
+    
+    return _searchResultsSignal;
 }
 
 - (RACSignal*)categoriesContentSignal

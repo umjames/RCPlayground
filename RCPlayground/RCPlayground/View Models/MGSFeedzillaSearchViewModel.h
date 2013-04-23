@@ -23,4 +23,6 @@
 - (RACSignal*)categoriesContentSignal;
 - (RACSignal*)subcategoriesContentSignal;
 
+- (RACSignal*)searchResultsSignal;
+
 @end

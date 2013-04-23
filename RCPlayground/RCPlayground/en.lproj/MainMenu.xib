@@ -1559,6 +1559,7 @@
 											</object>
 											<array class="NSMutableArray" key="NSTableColumns">
 												<object class="NSTableColumn" id="228859737">
+													<string key="NSIdentifier">authorColumn</string>
 													<double key="NSWidth">137.25390625</double>
 													<double key="NSMinWidth">40</double>
 													<double key="NSMaxWidth">1000</double>
@@ -1598,10 +1599,10 @@
 													</object>
 													<int key="NSResizingMask">3</int>
 													<bool key="NSIsResizeable">YES</bool>
-													<bool key="NSIsEditable">YES</bool>
 													<reference key="NSTableView" ref="441650594"/>
 												</object>
 												<object class="NSTableColumn" id="829688855">
+													<string key="NSIdentifier">titleColumn</string>
 													<double key="NSWidth">336.66015625</double>
 													<double key="NSMinWidth">40</double>
 													<double key="NSMaxWidth">1000</double>
@@ -1624,7 +1625,6 @@
 													</object>
 													<int key="NSResizingMask">3</int>
 													<bool key="NSIsResizeable">YES</bool>
-													<bool key="NSIsEditable">YES</bool>
 													<reference key="NSTableView" ref="441650594"/>
 												</object>
 											</array>

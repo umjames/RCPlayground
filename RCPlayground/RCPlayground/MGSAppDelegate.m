@@ -14,21 +14,29 @@
 #import "MGSFeedzillaCulture.h"
 #import "MGSFeedzillaCategory.h"
 #import "MGSFeedzillaSubcategory.h"
+#import "MGSFeedzillaSearchResult.h"
 
 @interface MGSAppDelegate ()
 
-@property (strong, nonatomic) MGSFeedzillaSearchViewModel* viewModel;
+@property (strong, nonatomic) MGSFeedzillaSearchViewModel*  viewModel;
+@property (strong, nonatomic) NSMutableArray*               searchResults;
+
+- (IBAction)searchTableRowDoubleClicked: (id)sender;
 
 @end
 
 @implementation MGSAppDelegate
 
 @synthesize window, categoryPopUpButton, culturePopUpButton, subcategoryPopUpButton, searchResultsTable, searchButton;
-@synthesize viewModel;
+@synthesize viewModel, searchResults;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
     self.viewModel = [[MGSFeedzillaSearchViewModel alloc] init];
+    self.searchResults = [NSMutableArray arrayWithCapacity: 5];
+    
+    self.searchResultsTable.dataSource = self;
+    self.searchResultsTable.doubleAction = @selector(searchTableRowDoubleClicked:);
     
     @weakify(self);
     
@@ -93,11 +101,52 @@
     } error: ^(NSError* error) {
         NSLog(@"error occurred populating subcategories: %@", [error localizedDescription]);
     }];
+    
+    [[self.viewModel searchResultsSignal] subscribeNext: ^(NSArray* searchResultObjects) {
+        @strongify(self);
+        [self.searchResults removeAllObjects];
+        [self.searchResults addObjectsFromArray: searchResultObjects];
+        [self.searchResultsTable reloadData];
+    }];
+}
+
+- (IBAction)searchTableRowDoubleClicked: (id)sender
+{
+    NSInteger   row = [sender clickedRow];
+    
+    if (-1 != row)
+    {
+        MGSFeedzillaSearchResult*   searchResult = [self.searchResults objectAtIndex: row];
+    
+        [[NSWorkspace sharedWorkspace] openURL: searchResult.URL];
+    }
 }
 
 - (IBAction)search: (id)sender
 {
     [self.viewModel search: sender];
+}
+
+- (NSInteger)numberOfRowsInTableView: (NSTableView*)tableView
+{
+    return [self.searchResults count];
+}
+
+- (id)tableView: (NSTableView*)tableView objectValueForTableColumn: (NSTableColumn*)tableColumn row: (NSInteger)row
+{
+    NSString*                   columnIdentifier = tableColumn.identifier;
+    MGSFeedzillaSearchResult*   searchResult = [self.searchResults objectAtIndex: row];
+    
+    if ([@"authorColumn" isEqualToString: columnIdentifier])
+    {
+        return searchResult.author;
+    }
+    else if ([@"titleColumn" isEqualToString: columnIdentifier])
+    {
+        return searchResult.title;
+    }
+
+    return nil;
 }
 
 @end
