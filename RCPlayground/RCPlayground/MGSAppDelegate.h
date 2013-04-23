@@ -15,6 +15,7 @@
 @property (assign) IBOutlet NSPopUpButton*  categoryPopUpButton;
 @property (assign) IBOutlet NSPopUpButton*  subcategoryPopUpButton;
 @property (assign) IBOutlet NSTableView*    searchResultsTable;
+@property (assign) IBOutlet NSButton*       searchButton;
 
 - (IBAction)search: (id)sender;
 

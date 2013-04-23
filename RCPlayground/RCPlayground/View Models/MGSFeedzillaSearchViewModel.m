@@ -20,14 +20,17 @@
     RACSignal*      _culturesContentSignal;
     RACSignal*      _categoriesContentSignal;
     RACSignal*      _subcategoriesContentSignal;
+    RACSignal*      _enableSearchSignal;
     
     RACSignal*      _selectedCultureSignal;
     RACSignal*      _selectedCategorySignal;
+    RACSignal*      _selectedSubcategorySignal;
 }
 
-@property (strong, nonatomic) MGSFeedzillaClient*   feedzillaClient;
-@property (strong, nonatomic) MGSFeedzillaCulture*  selectedCulture;
-@property (strong, nonatomic) MGSFeedzillaCategory* selectedCategory;
+@property (strong, nonatomic) MGSFeedzillaClient*       feedzillaClient;
+@property (strong, nonatomic) MGSFeedzillaCulture*      selectedCulture;
+@property (strong, nonatomic) MGSFeedzillaCategory*     selectedCategory;
+@property (strong, nonatomic) MGSFeedzillaSubcategory*  selectedSubcategory;
 
 @property (strong, nonatomic) NSMutableArray*       cultures;
 @property (strong, nonatomic) NSArray*              categories;
@@ -37,6 +40,7 @@
 
 - (RACSignal*)_selectedCultureSignal;
 - (RACSignal*)_selectedCategorySignal;
+- (RACSignal*)_selectedSubcategorySignal;
 
 @end
 
@@ -51,8 +55,11 @@
         _culturesContentSignal = nil;
         _categoriesContentSignal = nil;
         _subcategoriesContentSignal = nil;
+        _enableSearchSignal = nil;
         
         _selectedCultureSignal = nil;
+        _selectedCategorySignal = nil;
+        _selectedSubcategorySignal = nil;
         
         self.feedzillaClient = [MGSFeedzillaClient client];
         self.cultures = [[NSMutableArray alloc] initWithCapacity: 5];
@@ -61,6 +68,7 @@
         
         self.selectedCulture = nil;
         self.selectedCategory = nil;
+        self.selectedSubcategory = nil;
         
         [self _setupInternalSignals];
         
@@ -128,6 +136,9 @@
     {
         self.selectedCulture = [self.cultures objectAtIndex: selectedIndex];
     }
+    
+    self.selectedCategory = nil;
+    self.selectedSubcategory = nil;
 }
 
 - (IBAction)categorySelected: (id)sender
@@ -142,11 +153,39 @@
     {
         self.selectedCategory = [self.categories objectAtIndex: selectedIndex];
     }
+    
+    self.selectedSubcategory = nil;
+}
+
+- (IBAction)subcategorySelected: (id)sender
+{
+    NSInteger   selectedIndex = [sender indexOfSelectedItem];
+    
+    if (-1 == selectedIndex)
+    {
+        self.selectedSubcategory = nil;
+    }
+    else
+    {
+        self.selectedSubcategory = [self.subcategories objectAtIndex: selectedIndex];
+    }
 }
 
 - (IBAction)search: (id)sender
 {
     
+}
+
+- (RACSignal*)enableSearchSignal
+{
+    if (nil == _enableSearchSignal)
+    {
+        _enableSearchSignal = [RACSignal combineLatest: @[[self _selectedCultureSignal], [self _selectedCategorySignal], [self _selectedSubcategorySignal]] reduce: ^NSNumber*(MGSFeedzillaCulture* culture, MGSFeedzillaCategory* category, MGSFeedzillaSubcategory* subcategory) {
+            return [NSNumber numberWithBool: (nil != culture && nil != category && nil != subcategory)];
+        }];
+    }
+    
+    return _enableSearchSignal;
 }
 
 - (RACSignal*)culturesContentSignal
@@ -186,6 +225,16 @@
     }
     
     return _selectedCategorySignal;
+}
+
+- (RACSignal*)_selectedSubcategorySignal
+{
+    if (nil == _selectedSubcategorySignal)
+    {
+        _selectedSubcategorySignal = RACAble(self.selectedSubcategory);
+    }
+    
+    return _selectedSubcategorySignal;
 }
 
 - (RACSignal*)categoriesContentSignal

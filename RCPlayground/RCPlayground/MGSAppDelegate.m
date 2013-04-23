@@ -23,7 +23,7 @@
 
 @implementation MGSAppDelegate
 
-@synthesize window, categoryPopUpButton, culturePopUpButton, subcategoryPopUpButton, searchResultsTable;
+@synthesize window, categoryPopUpButton, culturePopUpButton, subcategoryPopUpButton, searchResultsTable, searchButton;
 @synthesize viewModel;
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -31,6 +31,12 @@
     self.viewModel = [[MGSFeedzillaSearchViewModel alloc] init];
     
     @weakify(self);
+    
+    [[self.viewModel enableSearchSignal] subscribeNext: ^(NSNumber* enabled) {
+        @strongify(self);
+        [self.searchButton setEnabled: [enabled boolValue]];
+    }];
+    
     [[self.viewModel culturesContentSignal] subscribeNext: ^(NSArray* cultures) {
         @strongify(self);
         [self.culturePopUpButton removeAllItems];
@@ -56,6 +62,12 @@
     [self.categoryPopUpButton.rac_command subscribeNext: ^(id sender) {
         @strongify(self);
         [self.viewModel categorySelected: sender];
+    }];
+    
+    self.subcategoryPopUpButton.rac_command = [RACCommand command];
+    [self.subcategoryPopUpButton.rac_command subscribeNext: ^(id sender) {
+        @strongify(self);
+        [self.viewModel subcategorySelected: sender];
     }];
     
     [[self.viewModel categoriesContentSignal] subscribeNext: ^(NSArray* categories) {

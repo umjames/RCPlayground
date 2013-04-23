@@ -11,6 +11,7 @@
 @class RACSignal;
 @class MGSFeedzillaCulture;
 @class MGSFeedzillaCategory;
+@class MGSFeedzillaSearchCriteria;
 
 @interface MGSFeedzillaClient : AFHTTPClient
 
@@ -21,5 +22,7 @@
 - (RACSignal*)fetchCultures;
 - (RACSignal*)fetchCategoriesWithCulture: (MGSFeedzillaCulture*)culture;
 - (RACSignal*)fetchSubcategoriesWithCategory: (MGSFeedzillaCategory*)category;
+
+- (RACSignal*)searchFeedsUsingCriteria: (MGSFeedzillaSearchCriteria*)criteria;
 
 @end

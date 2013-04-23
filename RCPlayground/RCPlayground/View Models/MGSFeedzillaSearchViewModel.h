@@ -15,9 +15,11 @@
 - (IBAction)search: (id)sender;
 - (IBAction)cultureSelected: (id)sender;
 - (IBAction)categorySelected: (id)sender;
+- (IBAction)subcategorySelected: (id)sender;
+
+- (RACSignal*)enableSearchSignal;
 
 - (RACSignal*)culturesContentSignal;
-
 - (RACSignal*)categoriesContentSignal;
 - (RACSignal*)subcategoriesContentSignal;
 
