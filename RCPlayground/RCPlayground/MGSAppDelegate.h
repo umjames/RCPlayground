@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
+// app delegate that also acts as controller for application's single window
 @interface MGSAppDelegate : NSObject <NSApplicationDelegate, NSTableViewDataSource>
 
 @property (assign) IBOutlet NSWindow*       window;
@@ -17,6 +18,7 @@
 @property (assign) IBOutlet NSTableView*    searchResultsTable;
 @property (assign) IBOutlet NSButton*       searchButton;
 
+// search button is pressed
 - (IBAction)search: (id)sender;
 
 @end

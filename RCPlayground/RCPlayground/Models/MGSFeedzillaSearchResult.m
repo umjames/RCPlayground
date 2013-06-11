@@ -10,4 +10,6 @@
 
 @implementation MGSFeedzillaSearchResult
 
+@synthesize author, title, URL;
+
 @end

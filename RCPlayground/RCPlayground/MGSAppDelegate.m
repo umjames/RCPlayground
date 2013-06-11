@@ -21,7 +21,7 @@
 @property (strong, nonatomic) MGSFeedzillaSearchViewModel*  viewModel;
 @property (strong, nonatomic) NSMutableArray*               searchResults;
 
-- (IBAction)searchTableRowDoubleClicked: (id)sender;
+- (IBAction)_searchTableRowDoubleClicked: (id)sender;
 
 @end
 
@@ -36,15 +36,19 @@
     self.searchResults = [NSMutableArray arrayWithCapacity: 5];
     
     self.searchResultsTable.dataSource = self;
-    self.searchResultsTable.doubleAction = @selector(searchTableRowDoubleClicked:);
+    self.searchResultsTable.doubleAction = @selector(_searchTableRowDoubleClicked:);
     
     @weakify(self);
     
+    // when we get another value from the view model's enableSearchSignal,
+    // enable/disable the search button based on the signal's new value (UI updating logic)
     [[self.viewModel enableSearchSignal] subscribeNext: ^(NSNumber* enabled) {
         @strongify(self);
         [self.searchButton setEnabled: [enabled boolValue]];
     }];
     
+    // when we get cultures from the view model, clear out all of the popup buttons' items
+    // and populate the culture popup button with the cultures' names
     [[self.viewModel culturesContentSignal] subscribeNext: ^(NSArray* cultures) {
         @strongify(self);
         [self.culturePopUpButton removeAllItems];
@@ -60,24 +64,38 @@
         NSLog(@"error occurred obtaining cultures: %@", [error localizedDescription]);
     }];
     
+    // use a command to send values (remember, commands are signals)
+    // when the popup button selection is changed (alternative to normal target/action setup)
     self.culturePopUpButton.rac_command = [RACCommand command];
+    
+    // when the user chooses a new value for this popup button, tell the view model about it
     [self.culturePopUpButton.rac_command subscribeNext: ^(id sender) {
         @strongify(self);
         [self.viewModel cultureSelected: sender];
     }];
     
+    // use a command to send values (remember, commands are signals)
+    // when the popup button selection is changed (alternative to normal target/action setup)
     self.categoryPopUpButton.rac_command = [RACCommand command];
+    
+    // when the user chooses a new value for this popup button, tell the view model about it
     [self.categoryPopUpButton.rac_command subscribeNext: ^(id sender) {
         @strongify(self);
         [self.viewModel categorySelected: sender];
     }];
     
+    // use a command to send values (remember, commands are signals)
+    // when the popup button selection is changed (alternative to normal target/action setup)
     self.subcategoryPopUpButton.rac_command = [RACCommand command];
+    
+    // when the user chooses a new value for this popup button, tell the view model about it
     [self.subcategoryPopUpButton.rac_command subscribeNext: ^(id sender) {
         @strongify(self);
         [self.viewModel subcategorySelected: sender];
     }];
     
+    // when there are new categories, clear the category and subcategory popup buttons,
+    // and populate the category popup button with the new categories
     [[self.viewModel categoriesContentSignal] subscribeNext: ^(NSArray* categories) {
         @strongify(self);
         [self.categoryPopUpButton removeAllItems];
@@ -91,6 +109,8 @@
         NSLog(@"error occurred populating categories: %@", [error localizedDescription]);
     }];
     
+    // when there are new subcategories, clear the subcategory popup button,
+    // and populate it with the new subcategories
     [[self.viewModel subcategoriesContentSignal] subscribeNext: ^(NSArray* subcategories) {
         @strongify(self);
         [self.subcategoryPopUpButton removeAllItems];
@@ -102,6 +122,9 @@
         NSLog(@"error occurred populating subcategories: %@", [error localizedDescription]);
     }];
     
+    
+    // when there are new search results, update our reference to the new results,
+    // and reload the search results table with the new data
     [[self.viewModel searchResultsSignal] subscribeNext: ^(NSArray* searchResultObjects) {
         @strongify(self);
         [self.searchResults removeAllObjects];
@@ -115,7 +138,8 @@
     return YES;
 }
 
-- (IBAction)searchTableRowDoubleClicked: (id)sender
+// open double clicked rows's feed URL in a browser
+- (IBAction)_searchTableRowDoubleClicked: (id)sender
 {
     NSInteger   row = [sender clickedRow];
     
@@ -127,6 +151,7 @@
     }
 }
 
+// when the search button is clicked, tell the view model to perform the search
 - (IBAction)search: (id)sender
 {
     [self.viewModel search: sender];

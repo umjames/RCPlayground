@@ -86,19 +86,27 @@
 
 - (void)_setupInternalSignals
 {
+    // since we will be referencing self in the signal's subscription blocks, we first make a weak reference to it
+    // and then ensure its presence inside the block with strongify
     @weakify(self);
     
+    // when we get new cultures from the API, store them in the cultures mutable array
     [[self culturesContentSignal] subscribeNext: ^(NSArray* culturesFromServer) {
         @strongify(self);
         [self.cultures removeAllObjects];
         [self.cultures addObjectsFromArray: culturesFromServer];
     }];
     
+    // when the selected culture changes, fetch that culture's categories from the API
     [[self _selectedCultureSignal] subscribeNext: ^(MGSFeedzillaCulture* culture) {
         @strongify(self);
         
+        // perform API call
         [[[self.feedzillaClient fetchCategoriesWithCulture: culture] map: ^id(NSArray* categoryJSON) {
             
+            // use the JSON array to create an array of MGSFeedzillaCategory model objects
+            // in order to use the map function on an NSArray, we have to turn it into a RACSequence first
+            // with the rac_sequence category method
             return [[categoryJSON.rac_sequence map: ^id(NSDictionary* categoryDict) {
                 MGSFeedzillaCategory* category = [[MGSFeedzillaCategory alloc] init];
                 
@@ -106,15 +114,21 @@
                 category.ID = [categoryDict objectForKey: @"category_id"];
                 
                 return category;
-            }] array];
+            }] array]; // we call -array on the sequence to get an NSArray of the sequence's values
         }] subscribeNext: ^(NSArray* categories) {
+            // then we store that array of model objects which causes the
+            // categoriesContentSignal to send these new objects to its subscribers
             self.categories = categories;
         }];
     }];
     
+    // when the selected category changes, fetch that category's subcategories from the API
     [[self _selectedCategorySignal] subscribeNext: ^(MGSFeedzillaCategory* category) {
         @strongify(self);
         
+        // just like with categories above, we make the API call, turn its results into
+        // model objects, and store them, which triggers the subcategoriesContentSignal to send them
+        // to its subscribers
         [[[self.feedzillaClient fetchSubcategoriesWithCategory: category] map: ^id(NSArray* subcategoryJSON) {
             return [[subcategoryJSON.rac_sequence map: ^id(NSDictionary* subcategoryDict) {
                 MGSFeedzillaSubcategory* subcategory = [[MGSFeedzillaSubcategory alloc] init];
@@ -130,6 +144,9 @@
     }];
 }
 
+// when the user selects a culture, we just change our selected culture reference and
+// clear the selected category and subcategory which triggers the signals tied to
+// those keypaths
 - (IBAction)cultureSelected: (id)sender
 {
     NSInteger   selectedIndex = [sender indexOfSelectedItem];
@@ -147,6 +164,9 @@
     self.selectedSubcategory = nil;
 }
 
+// when the user selects a category, we just change our selected category reference and
+// clear the selected subcategory which triggers the signals tied to
+// those keypaths
 - (IBAction)categorySelected: (id)sender
 {
     NSInteger   selectedIndex = [sender indexOfSelectedItem];
@@ -163,6 +183,8 @@
     self.selectedSubcategory = nil;
 }
 
+// when the user selects a subcategory, we just change our selected subcategory reference
+// which triggers the signal tied to that keypath
 - (IBAction)subcategorySelected: (id)sender
 {
     NSInteger   selectedIndex = [sender indexOfSelectedItem];
@@ -177,6 +199,10 @@
     }
 }
 
+// When the search button is clicked, we get the IDs of the selected category and subcategory
+// and use them to make an API call to search for feeds.  The results of the API call are turned
+// into an array of MGSFeedzillaSearchResult model objects.  Finally we assign this array to our
+// searchResults property which also triggers the searchResultsSignal
 - (IBAction)search: (id)sender
 {
     MGSFeedzillaSearchCriteria* searchCriteria = [[MGSFeedzillaSearchCriteria alloc] init];
@@ -214,6 +240,9 @@
     }];
 }
 
+// Returns a signal that takes the current values of the selected culture, category, and subcategory
+// and returns a BOOL (wrapped in an NSNumber) that is YES if there are values for all 3 and NO otherwise.
+// This is the logic that controls whether the search button should be enabled.
 - (RACSignal*)enableSearchSignal
 {
     if (nil == _enableSearchSignal)
@@ -226,6 +255,8 @@
     return _enableSearchSignal;
 }
 
+// returns a signal that fetches the cultures from the API, turns them into an array of
+// MGSFeedzillaCulture model objects and returns that array as its value
 - (RACSignal*)culturesContentSignal
 {
     if (nil == _culturesContentSignal)
@@ -245,6 +276,7 @@
     return _culturesContentSignal;
 }
 
+// returns a signal that sends the values of the selected culture as they are changed (cleaner way to handle KVO)
 - (RACSignal*)_selectedCultureSignal
 {
     if (nil == _selectedCultureSignal)
@@ -255,6 +287,7 @@
     return _selectedCultureSignal;
 }
 
+// returns a signal that sends the values of the selected category as they are changed (cleaner way to handle KVO)
 - (RACSignal*)_selectedCategorySignal
 {
     if (nil == _selectedCategorySignal)
@@ -265,6 +298,7 @@
     return _selectedCategorySignal;
 }
 
+// returns a signal that sends the values of the selected subcategory as they are changed (cleaner way to handle KVO)
 - (RACSignal*)_selectedSubcategorySignal
 {
     if (nil == _selectedSubcategorySignal)
@@ -275,6 +309,7 @@
     return _selectedSubcategorySignal;
 }
 
+// returns a signal that sends the values of the search results as they are changed (cleaner way to handle KVO)
 - (RACSignal*)searchResultsSignal
 {
     if (nil == _searchResultsSignal)
@@ -285,6 +320,7 @@
     return _searchResultsSignal;
 }
 
+// returns a signal that sends the values of the current categories as they are changed (cleaner way to handle KVO)
 - (RACSignal*)categoriesContentSignal
 {
     if (nil == _categoriesContentSignal)
@@ -295,6 +331,7 @@
     return _categoriesContentSignal;
 }
 
+// returns a signal that sends the values of the current subcategories as they are changed (cleaner way to handle KVO)
 - (RACSignal*)subcategoriesContentSignal
 {
     if (nil == _subcategoriesContentSignal)
