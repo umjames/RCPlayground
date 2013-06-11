@@ -35,10 +35,11 @@
 
 - (RACSignal*)fetchCultures
 {
+    NSLog(@"fetching cultures");
     return [[self rac_getPath: @"v1/cultures.json" parameters: nil] map: ^id(RACTuple* tuple) {
         RACTupleUnpack(AFHTTPRequestOperation* requestOp, NSData* response) = tuple;
         
-        NSLog(@"culture request operation is of class %@", NSStringFromClass([requestOp class]));
+        NSLog(@"culture request returned status code: %ld", requestOp.response.statusCode);
         
         NSArray*    responseArray = [NSJSONSerialization JSONObjectWithData: response options: 0 error: nil];
         
@@ -48,10 +49,11 @@
 
 - (RACSignal*)fetchCategoriesWithCulture: (MGSFeedzillaCulture*)culture
 {
+    NSLog(@"fetching categories with culture %@", culture.displayName);
     return [[self rac_getPath: @"v1/categories.json" parameters: @{@"culture_code": culture.code, @"order": @"popular"}] map: ^id(RACTuple* tuple) {
         RACTupleUnpack(AFHTTPRequestOperation* requestOp, NSData* response) = tuple;
         
-        NSLog(@"category request operation is of class %@", NSStringFromClass([requestOp class]));
+        NSLog(@"category request returned status code: %ld", requestOp.response.statusCode);
         
         NSArray*    responseArray = [NSJSONSerialization JSONObjectWithData: response options: 0 error: nil];
         
@@ -61,10 +63,11 @@
 
 - (RACSignal*)fetchSubcategoriesWithCategory: (MGSFeedzillaCategory*)category
 {
+    NSLog(@"fetching subcategories with category %@", category.displayName);
     return [[self rac_getPath: [NSString stringWithFormat: @"v1/categories/%d/subcategories.json", [category.ID intValue]] parameters: @{@"order": @"popular"}] map: ^id(RACTuple* tuple) {
         RACTupleUnpack(AFHTTPRequestOperation* requestOp, NSData* response) = tuple;
         
-        NSLog(@"subcategory request operation is of class %@", NSStringFromClass([requestOp class]));
+        NSLog(@"subcategory request returned status code: %ld", requestOp.response.statusCode);
         
         NSArray*    responseArray = [NSJSONSerialization JSONObjectWithData: response options: 0 error: nil];
         
@@ -74,10 +77,11 @@
 
 - (RACSignal*)searchFeedsUsingCriteria: (MGSFeedzillaSearchCriteria*)criteria
 {
+    NSLog(@"searching feeds with category ID: %d and subcategory ID: %d", [criteria.categoryID intValue], [criteria.subcategoryID intValue]);
     return [[self rac_getPath: [NSString stringWithFormat: @"v1/categories/%d/subcategories/%d/articles.json", [criteria.categoryID intValue], [criteria.subcategoryID intValue]] parameters: nil] map: ^id(RACTuple* tuple) {
         RACTupleUnpack(AFHTTPRequestOperation* requestOp, NSData* response) = tuple;
         
-        NSLog(@"article search request operation is of class %@", NSStringFromClass([requestOp class]));
+        NSLog(@"article search request returned status code: %ld", requestOp.response.statusCode);
         
         NSDictionary*    responseDictionary = [NSJSONSerialization JSONObjectWithData: response options: 0 error: nil];
         
