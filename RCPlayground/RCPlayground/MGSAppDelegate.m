@@ -110,6 +110,11 @@
     }];
 }
 
+- (BOOL)applicationShouldTerminateAfterLastWindowClosed: (NSApplication*)sender
+{
+    return YES;
+}
+
 - (IBAction)searchTableRowDoubleClicked: (id)sender
 {
     NSInteger   row = [sender clickedRow];

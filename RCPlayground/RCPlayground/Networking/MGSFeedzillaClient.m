@@ -65,7 +65,6 @@
         RACTupleUnpack(AFHTTPRequestOperation* requestOp, NSData* response) = tuple;
         
         NSLog(@"subcategory request operation is of class %@", NSStringFromClass([requestOp class]));
-//        NSLog(@"subcategory response = %@", [[NSString alloc] initWithData: response encoding: NSUTF8StringEncoding]);
         
         NSArray*    responseArray = [NSJSONSerialization JSONObjectWithData: response options: 0 error: nil];
         
